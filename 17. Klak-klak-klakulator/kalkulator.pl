@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use feature 'bitwise'; #Memastikan '~' merupakan numberic bit operations
 
 sub add {
     my ($a, $b) = @_;
@@ -22,7 +23,7 @@ sub subtract {
 
     SUBTRACT_LOOP:
     if ($b != 0) {
-        $borrow = (~$a) & $b;
+        $borrow = ~$a & $b;
         $a = $a ^ $b;
         $b = $borrow << 1;
         goto SUBTRACT_LOOP;
@@ -115,4 +116,5 @@ while (@tokens) {
     }
 }
 
+$result = unpack("l", pack("l", $result));
 print "Result: $result\n";
